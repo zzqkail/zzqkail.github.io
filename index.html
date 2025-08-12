@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>kali虚拟机交流社区</title>
+    <style>
+        /* 优化后的全局样式 */
+        :root {
+            --text-color: #333;
+            --primary-color: #4a6fa5;
+            --highlight-color: #ff6b6b;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #cccccc;
+            background: #0f0c29;
+            min-height: 100vh;
+            margin: 0;
+            padding: 1rem;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        /* 简化扫描线效果（静态） */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(90deg, rgba(0, 0, 0, 0) 48%, rgba(0, 255, 255, 0.05) 49%, rgba(0, 255, 255, 0.05) 51%, rgba(0, 0, 0, 0) 52%),
+                linear-gradient(0deg, rgba(0, 0, 0, 0) 48%, rgba(0, 255, 255, 0.05) 49%, rgba(0, 255, 255, 0.05) 51%, rgba(0, 0, 0, 0) 52%);
+            background-size: 50px 50px;
+            pointer-events: none;
+            opacity: 0.1;
+            z-index: -1;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* 优化section样式 */
+        section {
+            margin-bottom: 2rem;
+            background: rgba(15, 15, 35, 0.9); /* 增加不透明度减少模糊需求 */
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 255, 255, 0.1);
+            transform: translateZ(0); /* 硬件加速 */
+        }
+
+        /* 原始文档的其他样式 */
+        body {
+            background: 
+                linear-gradient(135deg, #0f0c29 0%, #1a1a3a 50%, #24243e 100%),
+                linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M0 0h100v100H0z" fill="none"/><path d="M0 0h1v100H0zM10 0h1v100H10zM20 0h1v100H20zM30 0h1v100H30zM40 0h1v100H40zM50 0h1v100H50zM60 0h1v100H60zM70 0h1v100H70zM80 0h1v100H80zM90 0h1v100H90zM99 0h1v100H99zM0 0v1h100V0zM0 10v1h100V10zM0 20v1h100V20zM0 30v1h100V30zM0 40v1h100V40zM0 50v1h100V50zM0 60v1h100V60zM0 70v1h100V70zM0 80v1h100V80zM0 90v1h100V90zM0 99v1h100V99z" stroke="%23333" stroke-width="0.3" opacity="0.3"/><circle cx="20" cy="20" r="1" fill="%239900ff" opacity="0.5"/><circle cx="50" cy="50" r="1" fill="%239900ff" opacity="0.5"/><circle cx="80" cy="30" r="1" fill="%239900ff" opacity="0.5"/></svg>');
+            background-size: cover;
+            background-attachment: fixed;
+        }
+        
+        /* 添加科技感动画元素 */
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(90deg, rgba(0, 0, 0, 0) 48%, rgba(0, 255, 255, 0.1) 49%, rgba(0, 255, 255, 0.1) 51%, rgba(0, 0, 0, 0) 52%),
+                linear-gradient(0deg, rgba(0, 0, 0, 0) 48%, rgba(0, 255, 255, 0.1) 49%, rgba(0, 255, 255, 0.1) 51%, rgba(0, 0, 0, 0) 52%);
+            background-size: 50px 50px;
+            pointer-events: none;
+            opacity: 0.2;
+            z-index: -1;
+            animation: scanlines 2s linear infinite;
+        }
+        
+        @keyframes scanlines {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 50px; }
+        }
+        
+        section:hover {
+            box-shadow: 0 0 25px rgba(0, 255, 255, 0.3);
+            border-color: rgba(0, 255, 255, 0.3);
+        }
+        
+        h2 {
+            color: #00ffff;
+            border-bottom: 2px solid rgba(0, 255, 255, 0.2);
+            padding-bottom: 0.5rem;
+            margin-top: 0;
+            font-size: 1.5rem;
+            text-shadow: 0 0 5px rgba(0, 255, 255, 0.3);
+        }
+        
+        h3 {
+            font-size: 1.2rem;
+            color: #00ffcc;
+        }
+        
+        p {
+            margin: 0.8rem 0;
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #dddddd;
+        }
+        
+        .highlight {
+            color: #00ffff;
+            font-weight: bold;
+            word-break: break-all;
+            text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+        }
+        
+        .download-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #00a8ff 0%, #0097e6 100%);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 6px;
+            text-decoration: none;
+            margin-top: 1rem;
+            transition: all 0.3s;
+            font-size: 1rem;
+            text-align: center;
+            min-width: 120px;
+            border: none;
+            box-shadow: 0 0 10px rgba(0, 168, 255, 0.5);
+        }
+        
+        .download-btn:hover {
+            background: linear-gradient(135deg, #0097e6 0%, #0088cc 100%);
+            box-shadow: 0 0 15px rgba(0, 168, 255, 0.8);
+            transform: translateY(-2px);
+        }
+        
+        form {
+            display: grid;
+            gap: 1rem;
+            width: 100%;
+        }
+        
+        input, textarea {
+            padding: 0.8rem;
+            background: rgba(20, 20, 40, 0.8);
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            border-radius: 6px;
+            width: 100%;
+            font-size: 1rem;
+            color: #ffffff;
+            transition: all 0.3s;
+        }
+        
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #00ffff;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+        }
+        
+        button {
+            background: linear-gradient(135deg, #00a8ff 0%, #0097e6 100%);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1rem;
+            width: 100%;
+            box-shadow: 0 0 10px rgba(0, 168, 255, 0.5);
+        }
+        
+        button:hover {
+            background: linear-gradient(135deg, #0097e6 0%, #0088cc 100%);
+            box-shadow: 0 0 15px rgba(0, 168, 255, 0.8);
+            transform: translateY(-2px);
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 1rem;
+            color: #666;
+            font-size: 0.9rem;
+            background: rgba(15, 15, 35, 0.8);
+            border-radius: 8px;
+            border: 1px solid rgba(0, 255, 255, 0.1);
+        }
+        
+        /* 移动端特定样式 */
+        @media (max-width: 768px) {
+            body {
+                padding: 0.5rem;
+            }
+            
+            main {
+                padding: 0;
+            }
+            
+            section {
+                padding: 1.2rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            h2 {
+                font-size: 1.3rem;
+            }
+            
+            h3 {
+                font-size: 1.1rem;
+            }
+            
+            .download-btn {
+                padding: 0.7rem 1.2rem;
+                font-size: 0.9rem;
+                display: block;
+                margin: 1rem auto 0;
+            }
+            
+            input, textarea, button {
+                padding: 0.7rem;
+            }
+            
+            body::before {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            section {
+                padding: 1rem;
+            }
+            
+            h2 {
+                font-size: 1.2rem;
+            }
+            
+            p, .download-btn, input, textarea, button {
+                font-size: 0.9rem;
+            }
+            
+            .highlight {
+                font-size: 0.95rem;
+            }
+        }
+        
+        /* 触摸优化 */
+        a, button {
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        /* 防止长按出现菜单 */
+        a {
+            -webkit-touch-callout: none;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <section id="home">
+            <h2>kali技术社区</h2>
+            <p>欢迎加入我们的kali技术交流社区！</p>
+            <p>QQ群号: <span class="highlight">234265266</span></p>
+            <p>在这里，您可以获取最新的网络渗透资源、技术支持和交流机会。</p>
+        </section>
+        
+        <section id="about">
+            <h2>关于我们</h2>
+            <p>我们是一个由kali爱好者组成的交流群，既有经验丰富的老手，也有刚刚入门的新人。</p>
+            <p>社区成立已有<span class="highlight">一年</span>时间，积累了丰富的技术资源和经验。</p>
+            <p>我们的目标是创建一个开放、友好的技术交流环境，帮助更多人掌握kali技术。</p>
+        </section>
+        
+        <section id="services">
+            <h2>我们的服务</h2>
+            <article>
+                <h3>加入社区</h3>
+                <p>QQ频道: <span class="highlight">pd52457273</span></p>
+                <p>加入我们的QQ群，与志同道合的朋友一起交流学习。</p>
+            </article>
+            <article>
+                <h3>管理员联系方式</h3>
+                <p>我的QQ: <span class="highlight">3759968179</span></p>
+                <p>如需帮助或想成为群管理员，欢迎联系我。</p>
+            </article>
+        </section>
+        
+        <section id="downloads" class="download-section">
+            <h2>资源下载</h2>
+            <article>
+                <h3>kali Linux</h3>
+                <p>kali的官方网站</p>
+                <a href="https://www.kali.org/" class="download-btn" download>立即去往</a>
+            </article>
+            <article>
+                <h3>kaliNetHunter</h3>
+                <p>kaliNetHunter安装访问码:imk7</p>
+                <a href="https://cloud.189.cn/t/IveUnqa2U36n" class="download-btn" download>立即下载</a>
+            </article>
+            <article>
+                <h3>常见问题解答</h3>
+                <p>kali虚拟机常见问题与解决方案合集，找群主，群主QQ号:3759968179</p>
+                <a href="https://im.qq.com/immobile/index.html?_wv=1025" class="download-btn" download>下载QQ</a>
+            </article>
+        </section>
+        
+        <section id="contact">
+            <h2>联系我们</h2>
+            <form>
+                <label for="name">姓名：</label>
+                <input type="text" id="name" name="name" required placeholder="请输入您的姓名">
+                
+                <label for="email">邮箱：</label>
+                <input type="email" id="email" name="email" required placeholder="请输入您的邮箱地址">
+                
+                <label for="message">留言内容：</label>
+                <textarea id="message" name="message" required placeholder="请不要留下您的宝贵意见或问题..." rows="4"></textarea>
+                
+                <button type="submit">提交留言</button>
+            </form>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2024 kali虚拟机交流社区. 允许使用源码若要源码请找管理员.</p>
+        <p style="margin-top: 0.5rem;">技术支持：kali技术团队</p>
+    </footer>
+</body>
+</html>
